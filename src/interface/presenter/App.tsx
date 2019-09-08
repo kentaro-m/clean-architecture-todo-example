@@ -27,24 +27,8 @@ const App = ({ useCase }: AppProps) => {
     const ENTER_KEY_CODE = 13
 
     if (event.keyCode === ENTER_KEY_CODE) {
-
-      const todoListItems = useCase.findAll()
-
-      let id = 0
-
-      if (todoListItems && todoListItems.length > 0) {
-        todoListItems.sort((a, b) => {
-          return b.id - a.id
-        })
-
-        id = todoListItems[0].id + 1
-      }
-    
-      const todoItem = new TodoItem(id, todoTitle, false)
-      useCase.create(todoItem)
-
-      const updatedTodoListItems = useCase.findAll()
-      setTodoItems(updatedTodoListItems)
+      const todoListItems = useCase.create(todoTitle)
+      setTodoItems(todoListItems)
       setTodoTitle('')
     }
 
@@ -52,24 +36,15 @@ const App = ({ useCase }: AppProps) => {
   }, [todoTitle])
 
   const handleDeleteClick = useCallback((id: number) => () => {
-    useCase.delete(id)
-
-    const todoListItems = useCase.findAll()
+    const todoListItems = useCase.delete(id)
     setTodoItems(todoListItems)
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleCompleteClick = useCallback((id: number) => () => {
-    const todoItem = useCase.findByID(id)
-
-    if (todoItem) {
-      const updatedTodoItem = new TodoItem(todoItem.id, todoItem.title, !todoItem.isCompleted)
-      useCase.update(updatedTodoItem)
-      const updatedTodoListItems = useCase.findAll()
-      setTodoItems(updatedTodoListItems)
-    }
-
+    const todoListItems = useCase.update(id)
+    setTodoItems(todoListItems)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

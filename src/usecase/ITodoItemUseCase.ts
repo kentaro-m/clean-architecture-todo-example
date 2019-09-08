@@ -3,7 +3,7 @@ import { TodoItem } from '../domain/TodoItem'
 export interface ITodoItemUseCase {
   findAll(): Array<TodoItem> | null
   findByID(id: number): TodoItem | null
-  create(todoItem: TodoItem): void
-  update(todoItem: TodoItem): void
-  delete(id: number): void
+  create(title: string): Array<TodoItem> | null
+  update(id: number): Array<TodoItem> | null
+  delete(id: number): Array<TodoItem> | null
 }

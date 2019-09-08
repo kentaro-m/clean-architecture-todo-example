@@ -17,15 +17,38 @@ export class TodoItemUseCase implements ITodoItemUseCase {
     return this.repository.findByID(id)
   }
 
-  create(todoItem: TodoItem) {
+  create(title: string): Array<TodoItem> | null {
+    const todoItems = this.repository.findAll()
+
+    let id = 0
+
+    if (todoItems && todoItems.length > 0) {
+      todoItems.sort((a, b) => {
+        return b.id - a.id
+      })
+
+      id = todoItems[0].id + 1
+    }
+
+    const todoItem = new TodoItem(id, title, false)
+
     this.repository.create(todoItem)
+    return this.repository.findAll()
   }
 
-  update(todoItem: TodoItem) {
-    this.repository.update(todoItem)
+  update(id: number): Array<TodoItem> | null {
+    const todoItem = this.repository.findByID(id)
+
+    if (todoItem) {
+      const updatedTodoItem = new TodoItem(todoItem.id, todoItem.title, !todoItem.isCompleted)
+      this.repository.update(updatedTodoItem)
+    }
+
+    return this.repository.findAll()
   }
 
-  delete(id: number) {
+  delete(id: number): Array<TodoItem> | null {
     this.repository.delete(id)
+    return this.repository.findAll()
   }
 }
