@@ -1,33 +1,14 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { Todo } from './Todo'
+import { Todo, Header, Layout } from './components'
 import { TodoItemUseCase } from '../../usecase/TodoItemUseCase'
 import { TodoItem } from '../../domain/TodoItem'
-import { Container, AppBar, Typography } from '@material-ui/core'
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      flexGrow: 1,
-    },
-    bar: {
-      padding: theme.spacing(1.5, 0),
-    },
-    title: {
-      flexGrow: 1,
-      textAlign: 'center',
-    },
-  }),
-);
-
+import { Container } from '@material-ui/core'
 
 interface AppProps {
   useCase: TodoItemUseCase
 }
 
 const App = ({ useCase }: AppProps) => {
-  const classes = useStyles();
-
   const [todoItems, setTodoItems] = useState<TodoItem[] | null>(null)
   const [todoTitle, setTodoTitle] = useState<string>('')
 
@@ -93,12 +74,8 @@ const App = ({ useCase }: AppProps) => {
   }, [])
 
   return (
-    <div className={classes.root}>
-      <AppBar position="static" className={classes.bar}>
-      <Typography variant="h6" className={classes.title}>
-        Todo App
-      </Typography>
-      </AppBar>
+    <Layout>
+      <Header />
       <Container maxWidth="sm">
         <Todo
           todoItems={todoItems}
@@ -109,7 +86,7 @@ const App = ({ useCase }: AppProps) => {
           onDeleteClick={handleDeleteClick}
         />
       </Container>
-    </div>
+    </Layout>
   );
 }
 
