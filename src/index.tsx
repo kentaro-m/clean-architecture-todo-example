@@ -6,7 +6,7 @@ import * as serviceWorker from './serviceWorker';
 import { ThemeProvider } from 'styled-components'
 import { createMuiTheme } from '@material-ui/core/styles';
 import { CssBaseline, colors } from '@material-ui/core'
-import { TodoItemUseCase } from './usecase/todoItem/TodoItemUseCase'
+import { TodoItemUseCase } from './usecase/TodoItemUseCase'
 import { TodoItemRepository } from './interface/repository/TodoItemRepository'
 
 const theme = createMuiTheme({

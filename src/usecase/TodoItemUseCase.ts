@@ -1,7 +1,8 @@
-import { TodoItem } from '../../domain/TodoItem'
-import { ITodoItemRepository } from '../../interface/repository/ITodoItemRepository'
+import { TodoItem } from '../domain/TodoItem'
+import { ITodoItemRepository } from '../interface/repository/ITodoItemRepository'
+import { ITodoItemUseCase } from './ITodoItemUseCase'
 
-export class TodoItemUseCase {
+export class TodoItemUseCase implements ITodoItemUseCase {
   private repository: ITodoItemRepository
 
   constructor(repository: ITodoItemRepository) {
