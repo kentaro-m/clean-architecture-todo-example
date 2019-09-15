@@ -1,0 +1,16 @@
+version: '3'
+services:
+  app:
+    depends_on:
+      - api
+    build: ./app
+    ports:
+      - "3000:3000"
+    volumes:
+      - "./app:/usr/src/app"
+  api:
+    build: ./api
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./api/db.json:/usr/src/app/db.json

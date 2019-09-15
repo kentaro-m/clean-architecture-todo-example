@@ -27,7 +27,7 @@ const theme = createMuiTheme({
   },
 })
 
-const restClient = new RestClient('http://localhost:3000')
+const restClient = new RestClient('http://localhost:3001')
 const todoApi = new TodoApi(restClient)
 const todoUseCase = new TodoItemUseCase(todoApi)
 
