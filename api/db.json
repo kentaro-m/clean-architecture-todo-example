@@ -1,0 +1,14 @@
+{
+  "todos": [
+    {
+      "title": "Learn to create the app using Clean Architecture",
+      "isCompleted": true,
+      "id": 1
+    },
+    {
+      "title": "あああああ",
+      "isCompleted": false,
+      "id": 3
+    }
+  ]
+}

@@ -7,7 +7,8 @@ import { ThemeProvider } from 'styled-components'
 import { createMuiTheme } from '@material-ui/core/styles';
 import { CssBaseline, colors } from '@material-ui/core'
 import { TodoItemUseCase } from './usecase/TodoItemUseCase'
-import { TodoItemRepository } from './interface/repository/TodoItemRepository'
+import { TodoApi } from './service/TodoApi'
+import { RestClient } from './adapter/RestClient'
 
 const theme = createMuiTheme({
   palette: {
@@ -26,14 +27,15 @@ const theme = createMuiTheme({
   },
 })
 
-const todoItemRepository = new TodoItemRepository('todos')
-const todoItemUseCase = new TodoItemUseCase(todoItemRepository)
+const restClient = new RestClient('http://localhost:3000')
+const todoApi = new TodoApi(restClient)
+const todoUseCase = new TodoItemUseCase(todoApi)
 
 ReactDOM.render(
   <ThemeProvider theme={theme}>
     <React.Fragment>
       <CssBaseline/>
-      <App useCase={todoItemUseCase} />
+      <App useCase={todoUseCase} />
     </React.Fragment>
   </ThemeProvider>,
   document.getElementById('root')

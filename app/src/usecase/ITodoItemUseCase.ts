@@ -1,9 +1,9 @@
 import { TodoItem } from '../domain/TodoItem'
 
 export interface ITodoItemUseCase {
-  findAll(): Array<TodoItem> | null
-  findByID(id: number): TodoItem | null
-  create(title: string): Array<TodoItem> | null
-  update(id: number): Array<TodoItem> | null
-  delete(id: number): Array<TodoItem> | null
+  findAll(): Promise<TodoItem[] | null>
+  findByID(id: number): Promise<TodoItem | null>
+  create(title: string): Promise<TodoItem[] | null>
+  update(id: number): Promise<TodoItem[] | null>
+  delete(id: number): Promise<TodoItem[] | null>
 }

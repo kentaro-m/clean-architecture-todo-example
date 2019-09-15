@@ -13,8 +13,14 @@ const App = ({ useCase }: AppProps) => {
   const [todoTitle, setTodoTitle] = useState<string>('')
 
   useEffect(() => {
-    const todoListItems = useCase.findAll()
-    setTodoItems(todoListItems)
+    (async () => {
+      try {
+        const todoListItems = await useCase.findAll()
+        setTodoItems(todoListItems)
+      } catch (error) {
+        console.log(error)
+      }
+    })()
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -23,11 +29,11 @@ const App = ({ useCase }: AppProps) => {
     setTodoTitle(event.target.value)
   }, [])
 
-  const handleAddKeyDown = useCallback((event: React.KeyboardEvent) => {
+  const handleAddKeyDown = useCallback(async (event: React.KeyboardEvent) => {
     const ENTER_KEY_CODE = 13
 
     if (event.keyCode === ENTER_KEY_CODE) {
-      const todoListItems = useCase.create(todoTitle)
+      const todoListItems = await useCase.create(todoTitle)
       setTodoItems(todoListItems)
       setTodoTitle('')
     }
@@ -35,15 +41,15 @@ const App = ({ useCase }: AppProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [todoTitle])
 
-  const handleDeleteClick = useCallback((id: number) => () => {
-    const todoListItems = useCase.delete(id)
+  const handleDeleteClick = useCallback((id: number) => async () => {
+    const todoListItems = await useCase.delete(id)
     setTodoItems(todoListItems)
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const handleCompleteClick = useCallback((id: number) => () => {
-    const todoListItems = useCase.update(id)
+  const handleCompleteClick = useCallback((id: number) => async () => {
+    const todoListItems = await useCase.update(id)
     setTodoItems(todoListItems)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])

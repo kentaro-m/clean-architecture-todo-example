@@ -20,4 +20,9 @@ export class TodoItem {
   get isCompleted(): boolean {
     return this._isCompleted
   }
+
+  static fromJSON(json: any) {
+    const { id, title, isCompleted } = json
+    return new TodoItem(id, title, isCompleted)
+  }
 }
