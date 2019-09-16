@@ -18,6 +18,7 @@ const App = ({ useCase }: AppProps): JSX.Element => {
         const todoListItems = await useCase.findAll()
         setTodoItems(todoListItems)
       } catch (error) {
+        // TODO: Add codes to handle errors
         console.log(error)
       }
     })()
@@ -37,9 +38,14 @@ const App = ({ useCase }: AppProps): JSX.Element => {
       const ENTER_KEY_CODE = 13
 
       if (event.keyCode === ENTER_KEY_CODE) {
-        const todoListItems = await useCase.create(todoTitle)
-        setTodoItems(todoListItems)
-        setTodoTitle('')
+        try {
+          const todoListItems = await useCase.create(todoTitle)
+          setTodoItems(todoListItems)
+          setTodoTitle('')
+        } catch (error) {
+          // TODO: Add codes to handle errors
+          console.log(error)
+        }
       }
     },
     [todoTitle] // eslint-disable-line react-hooks/exhaustive-deps
@@ -47,16 +53,26 @@ const App = ({ useCase }: AppProps): JSX.Element => {
 
   const handleDeleteClick = useCallback(
     (id: number) => async (): Promise<void> => {
-      const todoListItems = await useCase.delete(id)
-      setTodoItems(todoListItems)
+      try {
+        const todoListItems = await useCase.delete(id)
+        setTodoItems(todoListItems)
+      } catch (error) {
+        // TODO: Add codes to handle errors
+        console.log(error)
+      }
     },
     [] // eslint-disable-line react-hooks/exhaustive-deps
   )
 
   const handleCompleteClick = useCallback(
     (id: number) => async (): Promise<void> => {
-      const todoListItems = await useCase.update(id)
-      setTodoItems(todoListItems)
+      try {
+        const todoListItems = await useCase.update(id)
+        setTodoItems(todoListItems)
+      } catch (error) {
+        // TODO: Add codes to handle errors
+        console.log(error)
+      }
     },
     [] // eslint-disable-line react-hooks/exhaustive-deps
   )
