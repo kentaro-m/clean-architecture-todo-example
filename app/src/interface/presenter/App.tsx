@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { Todo, Header, Layout } from './components'
+import { Todo, Header, Layout } from '../../view'
 import { TodoItemUseCase } from '../../usecase/TodoItemUseCase'
 import { TodoItem } from '../../domain/TodoItem'
 import { Container } from '@material-ui/core'

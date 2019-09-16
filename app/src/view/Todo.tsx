@@ -1,7 +1,7 @@
 import React from 'react'
 import { List, ListItem, ListItemText, ListItemSecondaryAction, IconButton, Checkbox, ListItemIcon, TextField } from '@material-ui/core'
 import { Delete } from '@material-ui/icons'
-import { TodoItem } from '../../../domain/TodoItem'
+import { TodoItem } from '../domain/TodoItem'
 
 interface TodoProps {
   todoItems: TodoItem[] | null
