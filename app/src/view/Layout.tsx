@@ -13,7 +13,7 @@ type LayoutProps = {
   children?: React.ReactNode
 }
 
-export const Layout = ({ children }: LayoutProps) => {
+export const Layout = ({ children }: LayoutProps): JSX.Element => {
   const classes = useStyles()
 
   return <div className={classes.root}>{children}</div>

@@ -8,12 +8,12 @@ interface AppProps {
   useCase: TodoItemUseCase
 }
 
-const App = ({ useCase }: AppProps) => {
+const App = ({ useCase }: AppProps): JSX.Element => {
   const [todoItems, setTodoItems] = useState<TodoItem[] | null>(null)
   const [todoTitle, setTodoTitle] = useState<string>('')
 
   useEffect(() => {
-    ;(async () => {
+    ;(async (): Promise<void> => {
       try {
         const todoListItems = await useCase.findAll()
         setTodoItems(todoListItems)
@@ -41,29 +41,24 @@ const App = ({ useCase }: AppProps) => {
         setTodoItems(todoListItems)
         setTodoTitle('')
       }
-
-      // eslint-disable-next-line react-hooks/exhaustive-deps
     },
-    [todoTitle, useCase]
+    [todoTitle] // eslint-disable-line react-hooks/exhaustive-deps
   )
 
   const handleDeleteClick = useCallback(
-    (id: number) => async () => {
+    (id: number) => async (): Promise<void> => {
       const todoListItems = await useCase.delete(id)
       setTodoItems(todoListItems)
-
-      // eslint-disable-next-line react-hooks/exhaustive-deps
     },
-    [useCase]
+    [] // eslint-disable-line react-hooks/exhaustive-deps
   )
 
   const handleCompleteClick = useCallback(
-    (id: number) => async () => {
+    (id: number) => async (): Promise<void> => {
       const todoListItems = await useCase.update(id)
       setTodoItems(todoListItems)
-      // eslint-disable-next-line react-hooks/exhaustive-deps
     },
-    [useCase]
+    [] // eslint-disable-line react-hooks/exhaustive-deps
   )
 
   return (

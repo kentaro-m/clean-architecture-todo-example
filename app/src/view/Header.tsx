@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 )
 
-export const Header = () => {
+export const Header = (): JSX.Element => {
   const classes = useStyles()
 
   return (

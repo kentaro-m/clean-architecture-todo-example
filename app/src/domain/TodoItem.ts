@@ -1,7 +1,13 @@
+type TodoItemJSON = {
+  id: number
+  title: string
+  isCompleted: boolean
+}
+
 export class TodoItem {
-  private _id: number
-  private _title: string
-  private _isCompleted: boolean
+  private readonly _id: number
+  private readonly _title: string
+  private readonly _isCompleted: boolean
 
   constructor(id: number, title: string, isCompleted: boolean) {
     this._id = id
@@ -21,7 +27,7 @@ export class TodoItem {
     return this._isCompleted
   }
 
-  static fromJSON(json: any) {
+  static fromJSON(json: TodoItemJSON): TodoItem {
     const { id, title, isCompleted } = json
     return new TodoItem(id, title, isCompleted)
   }

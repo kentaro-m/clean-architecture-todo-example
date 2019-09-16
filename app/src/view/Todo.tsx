@@ -28,7 +28,7 @@ export const Todo = ({
   onAddKeyDown,
   onCompleteClick,
   onDeleteClick
-}: TodoProps) => (
+}: TodoProps): JSX.Element => (
   <React.Fragment>
     <TextField
       id="standard-with-placeholder"
