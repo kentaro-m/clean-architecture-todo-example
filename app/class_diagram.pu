@@ -1,0 +1,49 @@
+@startuml
+
+skinparam class {
+  BackgroundColor<<UI>> #bbddff
+  BackgroundColor<<Service>> #bbffbb
+  BackgroundColor<<Presenter>> #bbffbb
+  BackgroundColor<<Adapter>> #bbddff
+  BackgroundColor<<Usecase>> #ffbbbb
+  BackgroundColor<<Entity>> #ffffbb
+}
+
+class TodoItem <<Entity>> {
+}
+
+interface ITodoItemUseCase <<Usecase>> {
+}
+
+class TodoItemUseCase <<Usecase>> {
+}
+
+class App<<Presenter>> {
+}
+
+class Todo<<UI>> {
+}
+
+interface IRestClient <<Adapter>> {
+}
+
+class RestClient <<Adapter>> {
+}
+
+interface ITodoApi <<Service>> {
+}
+
+class TodoApi <<Service>> {
+}
+
+TodoItemUseCase ...|> ITodoItemUseCase
+RestClient ...|> IRestClient
+TodoApi ...|> ITodoApi
+
+TodoItemUseCase ..>  TodoItem
+TodoApi ..>  IRestClient
+TodoItemUseCase ..> ITodoApi
+App ..> TodoItemUseCase
+Todo ..> App
+
+@enduml
