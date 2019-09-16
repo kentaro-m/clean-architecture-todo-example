@@ -1,5 +1,14 @@
 import React from 'react'
-import { List, ListItem, ListItemText, ListItemSecondaryAction, IconButton, Checkbox, ListItemIcon, TextField } from '@material-ui/core'
+import {
+  List,
+  ListItem,
+  ListItemText,
+  ListItemSecondaryAction,
+  IconButton,
+  Checkbox,
+  ListItemIcon,
+  TextField
+} from '@material-ui/core'
 import { Delete } from '@material-ui/icons'
 import { TodoItem } from '../domain/TodoItem'
 
@@ -12,7 +21,14 @@ interface TodoProps {
   onDeleteClick: (id: number) => () => void
 }
 
-export const Todo = ({ todoItems, todoTitle, onInputChange, onAddKeyDown, onCompleteClick, onDeleteClick }: TodoProps) => (
+export const Todo = ({
+  todoItems,
+  todoTitle,
+  onInputChange,
+  onAddKeyDown,
+  onCompleteClick,
+  onDeleteClick
+}: TodoProps) => (
   <React.Fragment>
     <TextField
       id="standard-with-placeholder"
@@ -25,30 +41,32 @@ export const Todo = ({ todoItems, todoTitle, onInputChange, onAddKeyDown, onComp
       value={todoTitle}
     />
     <List component="nav">
-      {
-        todoItems &&
-          todoItems.map((todoItem) => {
-            return (
-              <ListItem key={todoItem.id}>
-                <ListItemIcon>
-                  <Checkbox
-                    edge="start"
-                    checked={todoItem.isCompleted}
-                    tabIndex={-1}
-                    disableRipple
-                    onClick={onCompleteClick(todoItem.id)}
-                  />
-                </ListItemIcon>
-                <ListItemText primary={todoItem.title} />
-                <ListItemSecondaryAction>
-                <IconButton edge="end" aria-label="delete" onClick={onDeleteClick(todoItem.id)}>
+      {todoItems &&
+        todoItems.map(todoItem => {
+          return (
+            <ListItem key={todoItem.id}>
+              <ListItemIcon>
+                <Checkbox
+                  edge="start"
+                  checked={todoItem.isCompleted}
+                  tabIndex={-1}
+                  disableRipple
+                  onClick={onCompleteClick(todoItem.id)}
+                />
+              </ListItemIcon>
+              <ListItemText primary={todoItem.title} />
+              <ListItemSecondaryAction>
+                <IconButton
+                  edge="end"
+                  aria-label="delete"
+                  onClick={onDeleteClick(todoItem.id)}
+                >
                   <Delete />
                 </IconButton>
-                </ListItemSecondaryAction>
-              </ListItem>
-            )
-          })
-      }
+              </ListItemSecondaryAction>
+            </ListItem>
+          )
+        })}
     </List>
   </React.Fragment>
 )

@@ -46,7 +46,10 @@ export class TodoApi implements ITodoApi {
       const item = await this.findById(id)
 
       if (item) {
-        await this.restClient.update(`/todos/${id}`, { title: item.title, isCompleted: !item.isCompleted })
+        await this.restClient.update(`/todos/${id}`, {
+          title: item.title,
+          isCompleted: !item.isCompleted
+        })
       }
     } catch (error) {
       return

@@ -21,7 +21,7 @@ export class RestClient implements IRestClient {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(resources),
+      body: JSON.stringify(resources)
     })
     return this._createResponse(res)
   }
@@ -32,14 +32,14 @@ export class RestClient implements IRestClient {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(resources),
+      body: JSON.stringify(resources)
     })
     return this._createResponse(res)
   }
 
   public async delete(resource: string): Promise<Response> {
     const res = this.client(this._createUrl(resource), {
-      method: 'DELETE',
+      method: 'DELETE'
     })
     return this._createResponse(res)
   }
@@ -48,12 +48,12 @@ export class RestClient implements IRestClient {
     return this.endpoint + resource
   }
 
-  private async _createResponse(res: Promise<Response>): Promise<any> {
-    return new Promise(async (resolve, reject) => {
+  private async _createResponse(res: Response): Promise<any> {
+    return new Promise((resolve, reject) => {
       try {
-        if ((await res).ok) {
+        if (res.ok) {
           try {
-            const json = (await res).json()
+            const json = res.json()
             resolve(json)
           } catch (error) {
             reject(error)
