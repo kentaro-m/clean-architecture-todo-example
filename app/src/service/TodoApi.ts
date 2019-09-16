@@ -10,59 +10,39 @@ export class TodoApi implements ITodoApi {
   }
 
   public async findAll(): Promise<TodoItem[] | null> {
-    try {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const todos: any = await this.restClient.get('/todos')
-      const items = []
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const todos: any = await this.restClient.get('/todos')
+    const items = []
 
-      for (const todo of todos) {
-        items.push(TodoItem.fromJSON(todo))
-      }
-
-      return items
-    } catch (error) {
-      return null
+    for (const todo of todos) {
+      items.push(TodoItem.fromJSON(todo))
     }
+
+    return items
   }
 
   public async findById(id: number): Promise<TodoItem | null> {
-    try {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const todo: any = await this.restClient.get(`/todos/${id}`)
-      return TodoItem.fromJSON(todo)
-    } catch (error) {
-      return null
-    }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const todo: any = await this.restClient.get(`/todos/${id}`)
+    return TodoItem.fromJSON(todo)
   }
 
   public async create(title: string): Promise<void> {
-    try {
-      await this.restClient.create('/todos', { title, isCompleted: false })
-    } catch (error) {
-      return
-    }
+    await this.restClient.create('/todos', { title, isCompleted: false })
   }
 
   public async update(id: number): Promise<void> {
-    try {
-      const item = await this.findById(id)
+    const item = await this.findById(id)
 
-      if (item) {
-        await this.restClient.update(`/todos/${id}`, {
-          title: item.title,
-          isCompleted: !item.isCompleted
-        })
-      }
-    } catch (error) {
-      return
+    if (item) {
+      await this.restClient.update(`/todos/${id}`, {
+        title: item.title,
+        isCompleted: !item.isCompleted
+      })
     }
   }
 
   public async delete(id: number): Promise<void> {
-    try {
-      await this.restClient.delete(`/todos/${id}`)
-    } catch (error) {
-      return
-    }
+    await this.restClient.delete(`/todos/${id}`)
   }
 }
