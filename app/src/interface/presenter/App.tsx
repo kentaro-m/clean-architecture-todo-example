@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect } from 'react'
 import { Todo, Header, Layout } from '../../view'
 import { TodoItemUseCase } from '../../usecase/TodoItemUseCase'
 import { TodoItem } from '../../domain/TodoItem'
@@ -8,12 +8,12 @@ interface AppProps {
   useCase: TodoItemUseCase
 }
 
-const App = ({ useCase }: AppProps) => {
+const App = ({ useCase }: AppProps): JSX.Element => {
   const [todoItems, setTodoItems] = useState<TodoItem[] | null>(null)
   const [todoTitle, setTodoTitle] = useState<string>('')
 
   useEffect(() => {
-    (async () => {
+    ;(async (): Promise<void> => {
       try {
         const todoListItems = await useCase.findAll()
         setTodoItems(todoListItems)
@@ -25,34 +25,41 @@ const App = ({ useCase }: AppProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const handleInputChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    setTodoTitle(event.target.value)
-  }, [])
+  const handleInputChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setTodoTitle(event.target.value)
+    },
+    []
+  )
 
-  const handleAddKeyDown = useCallback(async (event: React.KeyboardEvent) => {
-    const ENTER_KEY_CODE = 13
+  const handleAddKeyDown = useCallback(
+    async (event: React.KeyboardEvent) => {
+      const ENTER_KEY_CODE = 13
 
-    if (event.keyCode === ENTER_KEY_CODE) {
-      const todoListItems = await useCase.create(todoTitle)
+      if (event.keyCode === ENTER_KEY_CODE) {
+        const todoListItems = await useCase.create(todoTitle)
+        setTodoItems(todoListItems)
+        setTodoTitle('')
+      }
+    },
+    [todoTitle] // eslint-disable-line react-hooks/exhaustive-deps
+  )
+
+  const handleDeleteClick = useCallback(
+    (id: number) => async (): Promise<void> => {
+      const todoListItems = await useCase.delete(id)
       setTodoItems(todoListItems)
-      setTodoTitle('')
-    }
+    },
+    [] // eslint-disable-line react-hooks/exhaustive-deps
+  )
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [todoTitle])
-
-  const handleDeleteClick = useCallback((id: number) => async () => {
-    const todoListItems = await useCase.delete(id)
-    setTodoItems(todoListItems)
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  const handleCompleteClick = useCallback((id: number) => async () => {
-    const todoListItems = await useCase.update(id)
-    setTodoItems(todoListItems)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  const handleCompleteClick = useCallback(
+    (id: number) => async (): Promise<void> => {
+      const todoListItems = await useCase.update(id)
+      setTodoItems(todoListItems)
+    },
+    [] // eslint-disable-line react-hooks/exhaustive-deps
+  )
 
   return (
     <Layout>
@@ -68,7 +75,7 @@ const App = ({ useCase }: AppProps) => {
         />
       </Container>
     </Layout>
-  );
+  )
 }
 
-export default App;
+export default App

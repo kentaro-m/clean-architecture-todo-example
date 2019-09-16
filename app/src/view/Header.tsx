@@ -5,17 +5,17 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     bar: {
-      padding: theme.spacing(1.5, 0),
+      padding: theme.spacing(1.5, 0)
     },
     title: {
       flexGrow: 1,
-      textAlign: 'center',
-    },
-  }),
-);
+      textAlign: 'center'
+    }
+  })
+)
 
-export const Header = () => {
-  const classes = useStyles();
+export const Header = (): JSX.Element => {
+  const classes = useStyles()
 
   return (
     <AppBar position="static" className={classes.bar}>

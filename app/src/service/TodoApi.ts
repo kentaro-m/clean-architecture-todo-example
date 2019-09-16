@@ -11,6 +11,7 @@ export class TodoApi implements ITodoApi {
 
   public async findAll(): Promise<TodoItem[] | null> {
     try {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const todos: any = await this.restClient.get('/todos')
       const items = []
 
@@ -26,6 +27,7 @@ export class TodoApi implements ITodoApi {
 
   public async findById(id: number): Promise<TodoItem | null> {
     try {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const todo: any = await this.restClient.get(`/todos/${id}`)
       return TodoItem.fromJSON(todo)
     } catch (error) {
@@ -46,7 +48,10 @@ export class TodoApi implements ITodoApi {
       const item = await this.findById(id)
 
       if (item) {
-        await this.restClient.update(`/todos/${id}`, { title: item.title, isCompleted: !item.isCompleted })
+        await this.restClient.update(`/todos/${id}`, {
+          title: item.title,
+          isCompleted: !item.isCompleted
+        })
       }
     } catch (error) {
       return

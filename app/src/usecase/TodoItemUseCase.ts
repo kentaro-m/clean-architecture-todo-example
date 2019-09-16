@@ -30,5 +30,5 @@ export class TodoItemUseCase implements ITodoItemUseCase {
   async delete(id: number): Promise<TodoItem[] | null> {
     await this.service.delete(id)
     return this.service.findAll()
-  }  
+  }
 }

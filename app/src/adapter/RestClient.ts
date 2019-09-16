@@ -3,6 +3,7 @@ import fetch from 'unfetch'
 
 export class RestClient implements IRestClient {
   endpoint: string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   client: any
 
   constructor(endpoint: string) {
@@ -15,31 +16,33 @@ export class RestClient implements IRestClient {
     return this._createResponse(res)
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public async create(resource: string, resources: any): Promise<Response> {
-    const res = this.client(this._createUrl(resource), {
+    const res = await this.client(this._createUrl(resource), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(resources),
+      body: JSON.stringify(resources)
     })
     return this._createResponse(res)
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public async update(resource: string, resources: any): Promise<Response> {
-    const res = this.client(this._createUrl(resource), {
+    const res = await this.client(this._createUrl(resource), {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(resources),
+      body: JSON.stringify(resources)
     })
     return this._createResponse(res)
   }
 
   public async delete(resource: string): Promise<Response> {
-    const res = this.client(this._createUrl(resource), {
-      method: 'DELETE',
+    const res = await this.client(this._createUrl(resource), {
+      method: 'DELETE'
     })
     return this._createResponse(res)
   }
@@ -48,12 +51,13 @@ export class RestClient implements IRestClient {
     return this.endpoint + resource
   }
 
-  private async _createResponse(res: Promise<Response>): Promise<any> {
-    return new Promise(async (resolve, reject) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private async _createResponse(res: Response): Promise<any> {
+    return new Promise((resolve, reject): void => {
       try {
-        if ((await res).ok) {
+        if (res.ok) {
           try {
-            const json = (await res).json()
+            const json = res.json()
             resolve(json)
           } catch (error) {
             reject(error)
