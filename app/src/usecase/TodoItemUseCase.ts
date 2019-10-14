@@ -1,34 +1,44 @@
-import { TodoItem } from '../domain/TodoItem'
-import { ITodoApi } from '../service/ITodoApi'
+import { TodoItem } from '../entity/TodoItem'
 import { ITodoItemUseCase } from './ITodoItemUseCase'
+import { IRestClient } from '../adapter/IRestClient'
 
 export class TodoItemUseCase implements ITodoItemUseCase {
-  service: ITodoApi
+  client: IRestClient
 
-  constructor(service: ITodoApi) {
-    this.service = service
+  constructor(client: IRestClient) {
+    this.client = client
   }
 
   async findAll(): Promise<TodoItem[] | null> {
-    return this.service.findAll()
+    const todos: any = await this.client.getAllTodoItems()
+
+    const items = []
+
+    for (const todo of todos) {
+      items.push(TodoItem.fromJSON(todo))
+    }
+
+    return items
   }
 
   async findByID(id: number): Promise<TodoItem | null> {
-    return this.service.findById(id)
+    const todo: any = await this.client.getTodoItemByID(id)
+    return TodoItem.fromJSON(todo)
   }
 
-  async create(title: string): Promise<TodoItem[] | null> {
-    await this.service.create(title)
-    return this.service.findAll()
+  async create(title: string): Promise<void> {
+    await this.client.createTodoItem(title)
   }
 
-  async update(id: number): Promise<TodoItem[] | null> {
-    await this.service.update(id)
-    return this.service.findAll()
+  async update(id: number): Promise<void> {
+    const item = await this.findByID(id)
+
+    if (item) {
+      await this.client.updateTodoItemByID(id, item.title, !item.isCompleted)
+    }
   }
 
-  async delete(id: number): Promise<TodoItem[] | null> {
-    await this.service.delete(id)
-    return this.service.findAll()
+  async delete(id: number): Promise<void> {
+    await this.client.deleteTodoItemByID(id)
   }
 }

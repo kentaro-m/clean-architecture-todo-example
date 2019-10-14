@@ -1,14 +1,12 @@
 import React, { useState, useCallback, useEffect } from 'react'
-import { Todo, Header, Layout } from '../../view'
-import { TodoItemUseCase } from '../../usecase/TodoItemUseCase'
-import { TodoItem } from '../../domain/TodoItem'
-import { Container } from '@material-ui/core'
+import { TodoItem } from '../entity/TodoItem'
+import { TodoItemUseCase } from '../usecase/TodoItemUseCase'
 
-interface AppProps {
+interface TodoContainerProps {
   useCase: TodoItemUseCase
 }
 
-const App = ({ useCase }: AppProps): JSX.Element => {
+const TodoContainer = ({ useCase }: TodoContainerProps) => {
   const [todoItems, setTodoItems] = useState<TodoItem[] | null>(null)
   const [todoTitle, setTodoTitle] = useState<string>('')
 
@@ -39,7 +37,8 @@ const App = ({ useCase }: AppProps): JSX.Element => {
 
       if (event.keyCode === ENTER_KEY_CODE) {
         try {
-          const todoListItems = await useCase.create(todoTitle)
+          await useCase.create(todoTitle)
+          const todoListItems = await useCase.findAll()
           setTodoItems(todoListItems)
           setTodoTitle('')
         } catch (error) {
@@ -54,7 +53,8 @@ const App = ({ useCase }: AppProps): JSX.Element => {
   const handleDeleteClick = useCallback(
     (id: number) => async (): Promise<void> => {
       try {
-        const todoListItems = await useCase.delete(id)
+        await useCase.delete(id)
+        const todoListItems = await useCase.findAll()
         setTodoItems(todoListItems)
       } catch (error) {
         // TODO: Add codes to handle errors
@@ -67,7 +67,8 @@ const App = ({ useCase }: AppProps): JSX.Element => {
   const handleCompleteClick = useCallback(
     (id: number) => async (): Promise<void> => {
       try {
-        const todoListItems = await useCase.update(id)
+        await useCase.update(id)
+        const todoListItems = await useCase.findAll()
         setTodoItems(todoListItems)
       } catch (error) {
         // TODO: Add codes to handle errors
@@ -77,21 +78,18 @@ const App = ({ useCase }: AppProps): JSX.Element => {
     [] // eslint-disable-line react-hooks/exhaustive-deps
   )
 
-  return (
-    <Layout>
-      <Header />
-      <Container maxWidth="sm">
-        <Todo
-          todoItems={todoItems}
-          todoTitle={todoTitle}
-          onInputChange={handleInputChange}
-          onAddKeyDown={handleAddKeyDown}
-          onCompleteClick={handleCompleteClick}
-          onDeleteClick={handleDeleteClick}
-        />
-      </Container>
-    </Layout>
-  )
+  return {
+    state: {
+      todoItems,
+      todoTitle
+    },
+    functions: {
+      handleInputChange,
+      handleAddKeyDown,
+      handleCompleteClick,
+      handleDeleteClick
+    }
+  }
 }
 
-export default App
+export default TodoContainer

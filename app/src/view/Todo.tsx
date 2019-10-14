@@ -10,7 +10,7 @@ import {
   TextField
 } from '@material-ui/core'
 import { Delete } from '@material-ui/icons'
-import { TodoItem } from '../domain/TodoItem'
+import { TodoItem } from '../entity/TodoItem'
 
 interface TodoProps {
   todoItems: TodoItem[] | null
@@ -21,7 +21,7 @@ interface TodoProps {
   onDeleteClick: (id: number) => () => void
 }
 
-export const Todo = ({
+const Todo = ({
   todoItems,
   todoTitle,
   onInputChange,
@@ -70,3 +70,5 @@ export const Todo = ({
     </List>
   </React.Fragment>
 )
+
+export default Todo
