@@ -1,6 +1,13 @@
 # :ballot_box_with_check: Clean Architecture Todo Example
 :construction: [WIP] An implementation example of the Todo app using Clean Architecture.
 
+![](./demo.png)
+
+## :gift: Feature
+- Add a task
+- Complete a task
+- Delete a task
+
 ## :arrow_forward: Usage
 ```bash
 # API

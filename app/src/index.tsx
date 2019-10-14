@@ -1,13 +1,12 @@
-import React from 'react'
+import React, { createContext } from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
-import App from './interface/presenter/App'
+import { App } from './view'
 import * as serviceWorker from './serviceWorker'
 import { ThemeProvider } from 'styled-components'
 import { createMuiTheme } from '@material-ui/core/styles'
 import { CssBaseline, colors } from '@material-ui/core'
 import { TodoItemUseCase } from './usecase/TodoItemUseCase'
-import { TodoApi } from './service/TodoApi'
 import { RestClient } from './adapter/RestClient'
 
 const theme = createMuiTheme({
@@ -28,14 +27,21 @@ const theme = createMuiTheme({
 })
 
 const restClient = new RestClient('http://localhost:3001')
-const todoApi = new TodoApi(restClient)
-const todoUseCase = new TodoItemUseCase(todoApi)
+const todoUseCase = new TodoItemUseCase(restClient)
+
+interface IContextProps {
+  useCase: TodoItemUseCase
+}
+
+export const AppContext = createContext({} as IContextProps)
 
 ReactDOM.render(
   <ThemeProvider theme={theme}>
     <React.Fragment>
       <CssBaseline />
-      <App useCase={todoUseCase} />
+      <AppContext.Provider value={{ useCase: todoUseCase }}>
+        <App />
+      </AppContext.Provider>
     </React.Fragment>
   </ThemeProvider>,
   document.getElementById('root')

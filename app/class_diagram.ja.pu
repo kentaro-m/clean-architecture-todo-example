@@ -11,15 +11,18 @@ skinparam class {
 
 class TodoItem <<Entity>> {
 }
+note right : ドメインモデルを定義
 
 interface ITodoItemUseCase <<Usecase>> {
 }
 
 class TodoItemUseCase <<Usecase>> {
 }
+note right : ドメインモデルを操作して、機能を実現する
 
 class TodoContainer<<Presenters & Controllers>> {
 }
+note right : ユーザーからの入力とユースケースの処理結果の出力を行う
 
 class Todo<<UI>> {
 }
@@ -29,6 +32,7 @@ interface IRestClient <<Gateways>> {
 
 class RestClient <<Gateways>> {
 }
+note right : APIと通信を行う
 
 TodoItemUseCase ...|> ITodoItemUseCase
 RestClient ...|> IRestClient

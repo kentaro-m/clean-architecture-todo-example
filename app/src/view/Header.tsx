@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 )
 
-export const Header = (): JSX.Element => {
+const Header = (): JSX.Element => {
   const classes = useStyles()
 
   return (
@@ -25,3 +25,5 @@ export const Header = (): JSX.Element => {
     </AppBar>
   )
 }
+
+export default Header
